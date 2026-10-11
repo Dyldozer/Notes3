@@ -1,0 +1,521 @@
+{
+  "callTracking": {
+    "newCallDebounceMs": 3000
+  },
+  "categories": [
+    {
+      "enabled": true,
+      "flags": [
+        {
+          "id": "reason4Sro",
+          "message": "Placeholder flag: Reason 4 with SRO may need review.",
+          "when": {
+            "all": [
+              {
+                "in": [
+                  "r4"
+                ],
+                "step": "reason"
+              },
+              {
+                "in": [
+                  "sro"
+                ],
+                "step": "orderType"
+              }
+            ]
+          }
+        }
+      ],
+      "icon": "E711",
+      "id": "notDone",
+      "kind": "steps",
+      "label": "Not Done",
+      "notePrefix": "",
+      "steps": [
+        {
+          "id": "reason",
+          "label": "Reason (placeholder)",
+          "options": [
+            {
+              "fragment": "Reason 1 placeholder note.",
+              "id": "r1",
+              "label": "Reason 1 (placeholder)"
+            },
+            {
+              "fragment": "Reason 2 placeholder note.",
+              "id": "r2",
+              "label": "Reason 2 (placeholder)"
+            },
+            {
+              "fragment": "Reason 3 placeholder note.",
+              "id": "r3",
+              "label": "Reason 3 (placeholder)"
+            },
+            {
+              "fragment": "Reason 4 placeholder note.",
+              "id": "r4",
+              "label": "Reason 4 (placeholder)"
+            }
+          ],
+          "required": true,
+          "type": "choice"
+        },
+        {
+          "id": "orderType",
+          "label": "Order type",
+          "options": [
+            {
+              "fragment": "Order type PWO placeholder note.",
+              "id": "pwo",
+              "label": "PWO"
+            },
+            {
+              "fragment": "Order type TC placeholder note.",
+              "id": "tc",
+              "label": "TC"
+            },
+            {
+              "fragment": "Order type SRO placeholder note.",
+              "id": "sro",
+              "label": "SRO"
+            }
+          ],
+          "required": true,
+          "type": "choice"
+        },
+        {
+          "fields": [
+            {
+              "id": "supervisorName",
+              "label": "Supervisor name",
+              "required": true
+            },
+            {
+              "id": "rescheduleReason",
+              "label": "Reason for reschedule",
+              "multiline": true,
+              "required": true
+            }
+          ],
+          "fragment": "Supervisor {supervisorName} placeholder note. Reschedule reason {rescheduleReason} placeholder note.",
+          "id": "supervisorPwo",
+          "label": "Supervisor contact (PWO)",
+          "type": "group",
+          "when": {
+            "in": [
+              "pwo"
+            ],
+            "step": "orderType"
+          }
+        },
+        {
+          "fields": [
+            {
+              "id": "supervisorNameTc",
+              "label": "Supervisor name",
+              "required": false,
+              "requiredWhen": {
+                "in": [
+                  "yes"
+                ],
+                "step": "supervisorTc"
+              }
+            }
+          ],
+          "id": "supervisorTc",
+          "label": "Has the tech spoken with their supervisor?",
+          "options": [
+            {
+              "fragment": "Tech spoke with supervisor {supervisorNameTc} placeholder note.",
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "fragment": "",
+              "id": "no",
+              "label": "No",
+              "stop": {
+                "fragment": "Tech has not contacted supervisor; advised tech to contact supervisor before calling back.",
+                "keepSteps": [
+                  "reason",
+                  "orderType"
+                ],
+                "message": "The tech must contact their supervisor before calling back."
+              }
+            }
+          ],
+          "required": true,
+          "type": "yesno",
+          "when": {
+            "in": [
+              "tc"
+            ],
+            "step": "orderType"
+          }
+        },
+        {
+          "fields": [
+            {
+              "id": "contactDetails",
+              "label": "Contact details (placeholder)",
+              "required": false
+            }
+          ],
+          "id": "contact",
+          "label": "Contact (placeholder)",
+          "options": [
+            {
+              "fragment": "Contact 1 placeholder note. {contactDetails}",
+              "id": "c1",
+              "label": "Contact 1 (placeholder)"
+            },
+            {
+              "fragment": "Contact 2 placeholder note. {contactDetails}",
+              "id": "c2",
+              "label": "Contact 2 (placeholder)"
+            },
+            {
+              "fragment": "Contact 3 placeholder note. {contactDetails}",
+              "id": "c3",
+              "label": "Contact 3 (placeholder)"
+            },
+            {
+              "fragment": "Contact 4 placeholder note. {contactDetails}",
+              "id": "c4",
+              "label": "Contact 4 (placeholder)"
+            }
+          ],
+          "required": true,
+          "type": "choice"
+        },
+        {
+          "id": "outcome",
+          "label": "Outcome (placeholder)",
+          "options": [
+            {
+              "fragment": "Outcome 1 placeholder note.",
+              "id": "o1",
+              "label": "Outcome 1 (placeholder)"
+            },
+            {
+              "fragment": "Outcome 2 placeholder note.",
+              "id": "o2",
+              "label": "Outcome 2 (placeholder)"
+            },
+            {
+              "fragment": "Outcome 3 placeholder note.",
+              "id": "o3",
+              "label": "Outcome 3 (placeholder)"
+            },
+            {
+              "fragment": "Outcome 4 placeholder note.",
+              "id": "o4",
+              "label": "Outcome 4 (placeholder)"
+            }
+          ],
+          "required": true,
+          "type": "choice"
+        }
+      ],
+      "system": true
+    },
+    {
+      "enabled": true,
+      "entry": {
+        "actions": [
+          {
+            "fragment": "{action} {qty} {item}. {details}",
+            "id": "added",
+            "label": "Added"
+          },
+          {
+            "fragment": "{action} {qty} {item}. {details}",
+            "id": "removed",
+            "label": "Removed"
+          },
+          {
+            "fragment": "{action} {qty} {item}. {details}",
+            "id": "swapped",
+            "label": "Swapped"
+          }
+        ],
+        "details": true,
+        "items": [
+          {
+            "id": "item1",
+            "label": "Item 1 (placeholder)"
+          },
+          {
+            "id": "item2",
+            "label": "Item 2 (placeholder)"
+          },
+          {
+            "id": "item3",
+            "label": "Item 3 (placeholder)"
+          },
+          {
+            "id": "item4",
+            "label": "Item 4 (placeholder)"
+          },
+          {
+            "id": "item5",
+            "label": "Item 5 (placeholder)"
+          }
+        ],
+        "outcomeRequired": false,
+        "outcomes": [],
+        "qty": true
+      },
+      "icon": "E772",
+      "id": "equipment",
+      "kind": "items",
+      "label": "Equipment",
+      "notePrefix": "",
+      "system": true
+    },
+    {
+      "enabled": true,
+      "entry": {
+        "actions": [
+          {
+            "fragment": "{action} {qty} {item} {details}",
+            "id": "added",
+            "label": "Added"
+          },
+          {
+            "fragment": "{action} {qty} {item} {details}",
+            "id": "removed",
+            "label": "Removed"
+          },
+          {
+            "fragment": "{action} {qty} {item} {details}",
+            "id": "changed",
+            "label": "Changed"
+          }
+        ],
+        "details": true,
+        "items": [
+          {
+            "id": "item1",
+            "label": "Item 1 (placeholder)"
+          },
+          {
+            "id": "item2",
+            "label": "Item 2 (placeholder)"
+          },
+          {
+            "id": "item3",
+            "label": "Item 3 (placeholder)"
+          },
+          {
+            "id": "item4",
+            "label": "Item 4 (placeholder)"
+          },
+          {
+            "id": "item5",
+            "label": "Item 5 (placeholder)"
+          }
+        ],
+        "outcomeRequired": true,
+        "outcomes": [
+          {
+            "fragment": "- completed.",
+            "id": "completed",
+            "label": "Completed"
+          },
+          {
+            "fragment": "- requested, not yet completed.",
+            "id": "requested",
+            "label": "Requested — not yet completed"
+          },
+          {
+            "fragment": "- unable to complete.",
+            "id": "unable",
+            "label": "Unable to complete"
+          }
+        ],
+        "qty": false
+      },
+      "icon": "E8C7",
+      "id": "billing",
+      "kind": "items",
+      "label": "Billing",
+      "notePrefix": "",
+      "system": true
+    },
+    {
+      "enabled": true,
+      "icon": "E774",
+      "id": "static",
+      "kind": "static",
+      "label": "Static",
+      "notePrefix": "",
+      "static": {
+        "pingOutcomes": [
+          {
+            "fragment": "Ping to {pingTarget} {pingAddress}: reply received (placeholder wording).",
+            "id": "reply",
+            "label": "Reply received"
+          },
+          {
+            "fragment": "Ping to {pingTarget} {pingAddress}: no reply (placeholder wording).",
+            "id": "noReply",
+            "label": "No reply"
+          }
+        ],
+        "pingTargets": [
+          {
+            "id": "gateway",
+            "label": "Gateway"
+          },
+          {
+            "id": "ip",
+            "label": "IP"
+          }
+        ]
+      },
+      "system": true
+    },
+    {
+      "enabled": true,
+      "icon": "E73E",
+      "id": "closeJob",
+      "kind": "steps",
+      "label": "Close Job",
+      "notePrefix": "",
+      "steps": [
+        {
+          "id": "closeChoice",
+          "label": "Close choice (placeholder)",
+          "options": [
+            {
+              "fragment": "Close option 1 placeholder note.",
+              "id": "k1",
+              "label": "Close option 1 (placeholder)"
+            },
+            {
+              "fragment": "Close option 2 placeholder note.",
+              "id": "k2",
+              "label": "Close option 2 (placeholder)"
+            },
+            {
+              "fragment": "Close option 3 placeholder note.",
+              "id": "k3",
+              "label": "Close option 3 (placeholder)"
+            }
+          ],
+          "required": true,
+          "type": "choice"
+        },
+        {
+          "id": "closeFollowUp",
+          "label": "Close yes/no question (placeholder)",
+          "options": [
+            {
+              "fragment": "Close question yes placeholder note.",
+              "id": "yes",
+              "label": "Yes"
+            },
+            {
+              "fragment": "",
+              "id": "no",
+              "label": "No"
+            }
+          ],
+          "required": false,
+          "type": "yesno"
+        },
+        {
+          "fields": [
+            {
+              "id": "closeNote",
+              "label": "Close note (placeholder)",
+              "required": false
+            }
+          ],
+          "fragment": "Close note {closeNote} placeholder note.",
+          "id": "closeText",
+          "label": "Close text (placeholder)",
+          "required": false,
+          "type": "text"
+        }
+      ],
+      "system": true
+    }
+  ],
+  "contextFields": [
+    {
+      "id": "techName",
+      "label": "Technician"
+    },
+    {
+      "id": "techId",
+      "label": "Tech ID"
+    },
+    {
+      "id": "address",
+      "label": "Address"
+    },
+    {
+      "id": "jobNumber",
+      "label": "Job number"
+    },
+    {
+      "id": "workOrder",
+      "label": "Work order"
+    }
+  ],
+  "history": {
+    "retentionDays": 14
+  },
+  "noteTemplate": {
+    "categoryJoiner": "\n",
+    "endPunctuation": ".",
+    "fragmentJoiner": " ",
+    "lines": [
+      "Tech name: {tech.firstName}",
+      "Tech ID: {tech.id}",
+      "Job Number: {job.number}",
+      "Notes: {notes}"
+    ],
+    "sentenceCase": true,
+    "unavailableText": "[not available]"
+  },
+  "ping": {
+    "attempts": 4,
+    "intervalMs": 1000,
+    "timeoutMs": 1000,
+    "untilSuccessMaxMin": 10
+  },
+  "revision": 0,
+  "schemaVersion": 1,
+  "themes": {
+    "default": "spectrum-light",
+    "presets": [
+      {
+        "accent": "#0099D8",
+        "id": "spectrum-light",
+        "label": "Spectrum - light",
+        "mode": "light",
+        "sheet": "spectrum"
+      },
+      {
+        "accent": "#0099D8",
+        "id": "spectrum-dark",
+        "label": "Spectrum - dark",
+        "mode": "dark",
+        "sheet": "spectrum"
+      },
+      {
+        "accent": "#0F6CBD",
+        "id": "win365",
+        "label": "Microsoft 365 (plain)",
+        "mode": "light",
+        "sheet": "win365"
+      }
+    ]
+  },
+  "updatedAt": "2026-10-10T00:00:00",
+  "updatedBy": "built-in"
+}

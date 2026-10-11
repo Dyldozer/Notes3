@@ -1,0 +1,38 @@
+{
+  "name": "GroupBox",
+  "description": "Group box",
+  "order": 1001,
+  "css": "AxGroupBox.css",
+  "include": "lib\\components\\GroupBox\\AxGroupBox.ahk",
+  "requires": [],
+  "controls": [
+    {
+      "type": "GroupBox",
+      "label": "Group box",
+      "icon": "E754",
+      "category": "Containers",
+      "prefix": "grp",
+      "box": true,
+      "arg": {
+        "key": "legend",
+        "label": "Legend",
+        "kind": "text",
+        "default": "Options"
+      },
+      "props": [
+        { "key": "actions", "label": "Header buttons", "kind": "options", "shape": "act", "emit": "none" }
+      ],
+      "events": [
+        { "name": "Action", "sig": "name, win", "wire": "OnAction", "filter": "name",
+          "word": "has a header button pressed", "help": "A header button, or an entry of its menu, was pressed: name says which" },
+        "Click",
+        "DoubleClick",
+        "ContextMenu",
+        "MouseDown",
+        "MouseUp",
+        "Focus",
+        "Blur"
+      ]
+    }
+  ]
+}
